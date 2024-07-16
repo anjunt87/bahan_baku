@@ -12,7 +12,11 @@
             </div>
         </form> -->
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+<<<<<<< HEAD
             <!-- <li class="nav-item dropdown hidden-caret">
+=======
+            <li class="nav-item dropdown hidden-caret">
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="la la-envelope"></i>
                 </a>
@@ -22,7 +26,11 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
+<<<<<<< HEAD
             </li> -->
+=======
+            </li>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
             <li class="nav-item dropdown hidden-caret">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="la la-bell"></i>
@@ -30,12 +38,17 @@
                 </a>
                 <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
                     <li>
+<<<<<<< HEAD
                         <div class="dropdown-title"></div>
                         <!-- <div class="dropdown-title">You have 4 new notification</div> -->
+=======
+                        <div class="dropdown-title">You have 4 new notification</div>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                     </li>
                     <li>
                         <div class="notif-center">
                             <a href="#">
+<<<<<<< HEAD
                                 <div class="notif-icon notif-danger"> <i class="la la-bell-o"></i> </div>
                                 <div class="notif-content">
                                     <span class="block">
@@ -45,6 +58,8 @@
                                 </div>
                             </a>
                             <!-- <a href="#">
+=======
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                                 <div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
                                 <div class="notif-content">
                                     <span class="block">
@@ -64,7 +79,11 @@
                             </a>
                             <a href="#">
                                 <div class="notif-img">
+<<<<<<< HEAD
                                     <img src="<?= base_url() ?>assets/img/profile2.jpg" alt="Img Profile">
+=======
+                                    <img src="<?= base_url()?>assets/img/profile2.jpg" alt="Img Profile">
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                                 </div>
                                 <div class="notif-content">
                                     <span class="block">
@@ -81,7 +100,11 @@
                                     </span>
                                     <span class="time">17 minutes ago</span>
                                 </div>
+<<<<<<< HEAD
                             </a> -->
+=======
+                            </a>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                         </div>
                     </li>
                     <li>
@@ -90,6 +113,7 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
+<<<<<<< HEAD
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="<?= base_url() ?>assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span><?= $username ?></span></span> </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
@@ -103,13 +127,33 @@
                         </div>
                     </li>
                     <!-- <div class="dropdown-divider"></div>
+=======
+                <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="<?= base_url()?>assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span>Anjunt</span></span> </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <div class="user-box">
+                            <div class="u-img"><img src="<?= base_url()?>assets/img/profile.jpg" alt="user"></div>
+                            <div class="u-text">
+                                <h4>Hizrian</h4>
+                                <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                     <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
                     <a class="dropdown-item" href="#"></i> My Balance</a>
                     <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
                     <div class="dropdown-divider"></div>
+<<<<<<< HEAD
                     <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a> -->
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fa fa-power-off"></i> Logout</a>
+=======
+                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                 </ul>
                 <!-- /.dropdown-user -->
             </li>

@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+<<<<<<< HEAD
 // $routes->get('/', 'Home::index');
 // login
 $routes->get('/', 'Login::index');
@@ -27,6 +28,13 @@ $routes->get('/user/dashboard', 'UserDashboard::index');
 
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 // $routes->get('admin', 'Admin\Home::index');
+=======
+// login
+
+
+$routes->get('/', 'Home::index');
+$routes->get('admin', 'Admin\Home::index');
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
 
 // Suppliers
 $routes->get('admin/suppliers', 'Admin\Suppliers::index');
@@ -34,6 +42,7 @@ $routes->get('admin/suppliers/edit/(:num)', 'Admin\Suppliers::edit/$1');
 $routes->post('admin/suppliers/update', 'Admin\Suppliers::update');
 $routes->post('admin/suppliers/save', 'Admin\Suppliers::save');
 $routes->post('admin/suppliers/delete', 'Admin\Suppliers::delete');
+<<<<<<< HEAD
 
 // Items
 $routes->get('admin/listitems', 'Admin\ListItems::index');
@@ -59,3 +68,5 @@ $routes->get('inventory/getQc', 'Inventory::getQc');
 
 
 
+=======
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83

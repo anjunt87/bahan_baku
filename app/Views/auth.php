@@ -30,7 +30,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
+<<<<<<< HEAD
                     <h3 class="mb-3">Login Now</h3>
+=======
+                    <h3 class="mb-3">Login Now <?= $gogo;?></h3>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                     <div class="bg-white shadow rounded">
                         <div class="row">
                             <div class="col-md-7 pe-0">

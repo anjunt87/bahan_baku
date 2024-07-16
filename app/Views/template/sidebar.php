@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <style>
     .scrollbar-inner1 {
         height: 100%;
@@ -12,6 +13,13 @@
         <!-- <div class="user">
             <div class="photo">
                 <img src="<?= base_url() ?>assets/img/profile.jpg">
+=======
+<div class="sidebar">
+    <div class="scrollbar-inner sidebar-wrapper">
+        <div class="user">
+            <div class="photo">
+                <img src="<?= base_url()?>assets/img/profile.jpg">
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
             </div>
             <div class="info">
                 <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -43,7 +51,11 @@
                     </ul>
                 </div>
             </div>
+<<<<<<< HEAD
         </div> -->
+=======
+        </div>
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
         <ul class="nav">
             <li class="nav-item">
                 <a href="<?= base_url('admin') ?>">
@@ -53,6 +65,7 @@
                 </a>
             </li>
             <li class="nav-item">
+<<<<<<< HEAD
                 <a class="" data-toggle="collapse" href="#collapseSItems" aria-expanded="true">
                     <i class="la la-cubes"></i>
                     <p>Inventory</p>
@@ -103,10 +116,35 @@
             </li> -->
             <li class="nav-item">
                 <a class="" data-toggle="collapse" href="#collapsePO" aria-expanded="true">
+=======
+                <a href="<?= base_url('admin/suppliers') ?>">
+                    <i class="la la-university"></i>
+                    <p>Suppliers</p>
+                    <!-- <span class="badge badge-count">5</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="la la-cubes"></i>
+                    <p>Supervision of goods</p>
+                    <!-- <span class="badge badge-count">5</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="la la-list"></i>
+                    <p>List of items</p>
+                    <!-- <span class="badge badge-count">5</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#">
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
                     <i class="la la-shopping-cart"></i>
                     <p>Pre Order</p>
                     <!-- <span class="badge badge-count">5</span> -->
                 </a>
+<<<<<<< HEAD
                 <div class="collapse in" id="collapsePO" aria-expanded="true">
                     <ul class="nav">
                         <li class="nav-item">
@@ -183,6 +221,29 @@
                     </ul>
                 </div>
             </li>
+=======
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="la la-users"></i>
+                    <p>Users</p>
+                    <!-- <span class="badge badge-count">5</span> -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="la la-gear"></i>
+                    <p>Settings</p>
+                    <!-- <span class="badge badge-count">14</span> -->
+                </a>
+            </li>
+            <!-- <li class="nav-item update-pro">
+                <button data-toggle="modal" data-target="#modalUpdate">
+                    <i class="la la-hand-pointer-o"></i>
+                    <p>Update To Pro</p>
+                </button>
+            </li> -->
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
         </ul>
     </div>
 </div>

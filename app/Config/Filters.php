@@ -28,12 +28,15 @@ class Filters extends BaseFilters
         'csrf'          => CSRF::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
+<<<<<<< HEAD
         // 'csrf'       => \App\Filters\CSRF::class,
         // 'toolbar'    => \App\Filters\DebugToolbar::class,
         // 'honeypot'   => \App\Filters\Honeypot::class,
         'auth'          => \App\Filters\Auth::class,
         // 'authGuard'  => \App\Filters\AuthGuard::class,
         // 'auth'       => \App\Filters\AuthFilter::class,
+=======
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'cors'          => Cors::class,
@@ -77,7 +80,11 @@ class Filters extends BaseFilters
         'before' => [
             // 'honeypot',
             // 'csrf',
+<<<<<<< HEAD
             'csrf' => ['except' => ['admin/suppliers/save', 'admin/suppliers/update', 'register/save', 'login/auth']],
+=======
+            'csrf' => ['except' => ['admin/suppliers/save', 'admin/suppliers/update']],
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
             // 'invalidchars',
         ],
         'after' => [
@@ -111,7 +118,11 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
+<<<<<<< HEAD
     public array $filters = [
         'auth' => ['before' => ['dashboard/*', 'admin/*', 'manager/*', 'staff/*']],
     ];
+=======
+    public array $filters = [];
+>>>>>>> a1db0e873e44bc891e2523d379275f537bf08e83
 }
