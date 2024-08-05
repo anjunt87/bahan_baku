@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+
 // $routes->get('/', 'Home::index');
 // login
 $routes->get('/', 'Login::index');
@@ -28,6 +29,12 @@ $routes->get('/user/dashboard', 'UserDashboard::index');
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 // $routes->get('admin', 'Admin\Home::index');
 
+// login
+
+
+$routes->get('/', 'Home::index');
+$routes->get('admin', 'Admin\Home::index');
+
 // Suppliers
 $routes->get('admin/suppliers', 'Admin\Suppliers::index');
 $routes->get('admin/suppliers/edit/(:num)', 'Admin\Suppliers::edit/$1');
@@ -35,7 +42,8 @@ $routes->post('admin/suppliers/update', 'Admin\Suppliers::update');
 $routes->post('admin/suppliers/save', 'Admin\Suppliers::save');
 $routes->post('admin/suppliers/delete', 'Admin\Suppliers::delete');
 
-// Setting Items 
+// Items
+
 $routes->get('admin/listitems', 'Admin\ListItems::index');
 $routes->get('admin/listitems/edit/(:num)', 'Admin\ListItems::edit/$1');
 $routes->post('admin/listitems/update', 'Admin\ListItems::update');
@@ -52,7 +60,6 @@ $routes->get('inventory/getItems', 'Inventory::getItems');
 $routes->get('inventory/getSuppliers', 'Inventory::getSuppliers');
 $routes->get('inventory/getUsers', 'Inventory::getUsers');
 $routes->get('inventory/getQc', 'Inventory::getQc');
-
 
 $routes->get('/cart', 'CartController::index');
 $routes->post('/cart/add', 'CartController::add');
@@ -76,18 +83,3 @@ $routes->get('/pre-order', 'PreOrderController::index');
 $routes->get('/pre-order/create', 'PreOrderController::create');
 $routes->post('/pre-order/store', 'PreOrderController::store');
 $routes->get('/pre-order/(:num)', 'PreOrderController::show/$1');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
