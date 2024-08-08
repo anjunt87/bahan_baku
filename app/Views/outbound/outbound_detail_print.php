@@ -152,8 +152,8 @@
 
                                 <div class="order-items mt-4">
                                     <h4 class="mb-3">Requested item</h4>
-                                    <table class="order-item-table">
-                                        <thead>
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
                                             <tr>
                                                 <th>ID Item</th>
                                                 <th>Item Name</th>

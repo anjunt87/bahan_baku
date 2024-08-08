@@ -20,29 +20,34 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <?php if (empty($cartItems)) : ?>
-                                <div class="alert alert-warning" role="alert">
-                                    Your cart item is empty.
-                                </div>
-                            <?php else : ?>
-                                <ul class="list-group">
-                                    <?php foreach ($cartItems as $cartItem) : ?>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="mb-1"><?= $cartItem['item']['name_items']; ?></h5>
-                                                    <p class="mb-1">Amount : <?= $cartItem['quantity']; ?></p>
+                            <div class="cart-content">
+                                <?php if (empty($cartItems)) : ?>
+                                    <div class="alert alert-warning" role="alert">
+                                        Your cart item is empty.
+                                    </div>
+                                <?php else : ?>
+                                    <ul class="list-group">
+                                        <?php foreach ($cartItems as $cartItem) : ?>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center" id="item-<?= $cartItem['id']; ?>">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <h5 class="mb-1"><?= $cartItem['item']['name_items']; ?></h5>
+                                                        <p class="mb-1">Amount : <span id="quantity-<?= $cartItem['id']; ?>"><?= $cartItem['quantity']; ?></span></p>
+                                                        <!-- Tombol Tambah dan Kurang -->
+                                                        <button class="btn btn-primary btn-sm btn-decrease" data-id="<?= $cartItem['id']; ?>">-</button>
+                                                        <button class="btn btn-primary btn-sm btn-increase" data-id="<?= $cartItem['id']; ?>">+</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <a href="/cart/remove/<?= $cartItem['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                                <div class="mt-3 me-2 text-end">
-                                    <a href="/items" class="btn btn-danger me-2">Back</a>
-                                    <a href="/checkout" class="btn btn-primary">Proceed to Pickup</a>
-                                </div>
-                            <?php endif; ?>
+                                                <a href="#" data-id="<?= $cartItem['id']; ?>" class="btn btn-danger btn-sm btn-remove">Remove</a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <div class="mt-3 me-2 text-end">
+                                        <a href="/items" class="btn btn-danger me-2">Back</a>
+                                        <a href="/checkout" class="btn btn-primary">Proceed to Pickup</a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,6 +63,87 @@
 </div>
 </div>
 </body>
+<script>
+    $(document).ready(function() {
+        // Event untuk menambah jumlah item
+        $('.btn-increase').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            updateQuantity(id, 1);
+        });
+
+        // Event untuk mengurangi jumlah item
+        $('.btn-decrease').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            updateQuantity(id, -1);
+        });
+
+        // Event untuk menghapus item dari keranjang
+        $('.btn-remove').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            removeItem(id);
+        });
+
+        function updateQuantity(id, delta) {
+            $.ajax({
+                url: '<?= base_url('/cart/update_quantity'); ?>', // Ganti dengan URL endpoint yang sesuai
+                type: 'POST',
+                data: {
+                    id: id,
+                    delta: delta
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var newQuantity = response.new_quantity;
+                        $('#quantity-' + id).text(newQuantity);
+                        if (newQuantity === 0) {
+                            $('#item-' + id).remove();
+                        }
+                        updateCartCount();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error updating quantity');
+                }
+            });
+        }
+
+        function removeItem(id) {
+            $.ajax({
+                url: '<?= base_url('/cart/remove/'); ?>' + id,
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        $('#item-' + id).remove();
+                        updateCartCount();
+                        checkEmptyCart();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error removing item');
+                }
+            });
+        }
+
+        function updateCartCount() {
+            var count = $('.list-group-item').length;
+            $('#cart-count-outbound').text(count);
+        }
+
+        function checkEmptyCart() {
+            if ($('.list-group-item').length === 0) {
+                $('.cart-content').html('<div class="alert alert-warning" role="alert">Your cart item is empty.</div>');
+                $('#cart-count-outbound').text('0');
+            }
+        }
+    });
+</script>
 <!-- Template Script -->
 <?= $this->include('template/script') ?>
 

@@ -1,52 +1,7 @@
-<style>
-    .order-summary {
-        margin-top: 20px;
-    }
-
-    .order-item-table th,
-    .order-item-table td {
-        text-align: center;
-    }
-
-    @media print {
-        .no-print {
-            display: none;
-        }
-
-        .print-only {
-            display: block;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .main-panel,
-        .content,
-        .container-fluid,
-        .card,
-        .card-body,
-        .row,
-        .col-md-6,
-        .col-md-12 {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .page-title,
-        .btn {
-            display: none;
-        }
-    }
-
-    .print-only {
-        display: none;
-    }
-</style>
 <!-- Template Navbar -->
 <?= $this->include('template/header') ?>
+<!-- Template Style -->
+<?= $this->include('style/detail') ?>
 <!-- Template Navbar -->
 <?= $this->include('template/navbar') ?>
 <!-- Template SideBar -->
@@ -98,8 +53,8 @@
 
                                 <div class="order-items mt-4">
                                     <h4 class="mb-3">Requested item</h4>
-                                    <table class="table table-striped order-item-table">
-                                        <thead>
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
                                             <tr>
                                                 <th>ID Item</th>
                                                 <th>Item Name</th>
@@ -122,17 +77,17 @@
                                     Item not found.
                                 </div>
                             <?php endif; ?>
-                            <div class="no-print">
-                                <a href="/order/history" class="btn btn-danger mt-4">Return to Outbound History</a>
-                                <a href="/order/print/<?= $outbound['id']; ?>" class="btn btn-primary mt-4">Print</a>
-                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-2">
+                            <a href="/outbound/history" class="btn btn-danger mt-4">Return to Outbound History</a>
+                            <a href="/outbound/print/<?= $outbound['id']; ?>" class="btn btn-primary ml-2 mt-4">Print</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Template SideBar -->

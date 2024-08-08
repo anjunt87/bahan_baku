@@ -4,69 +4,108 @@ namespace App\Controllers;
 
 use App\Models\CartModel;
 use CodeIgniter\Controller;
-use App\Models\InventoryModel;
 use App\Models\ListItemsModel;
 use App\Models\SuppliersModel;
+use App\Models\OrderModel;
+use App\Models\OrderItemModel;
 use App\Models\OutboundModel;
 use App\Models\OutboundItemModel;
 use App\Models\UserModel;
+use App\Models\PreOrderModel;
+use App\Models\PreOrderCartModel;
+use App\Models\DivisionModel;
+
 
 class CheckoutController extends Controller
 {
-    protected $cartItem;
-    protected $inventoryModel;
+    protected $cartModel;
+    protected $cartItems;
+    protected $itemModel;
     protected $listitemsModel;
-    protected $supplierModel;
+    protected $suppliersModel;
+    protected $orderModel;
+    protected $orderitemModel;
     protected $outboundModel;
     protected $outboundItemModel;
     protected $usersModel;
+    protected $preOrderModel;
+    protected $preOrderCartModel;
+    protected $divisionModel;
+
 
     public function __construct()
     {
 
         $this->listitemsModel = new ListItemsModel();
-        $this->inventoryModel = new InventoryModel();
-        $this->supplierModel = new SuppliersModel();
-        $this->usersModel = new UserModel();
+        $this->suppliersModel = new SuppliersModel();
         $this->outboundModel = new OutboundModel();
         $this->outboundItemModel = new OutboundItemModel();
+        $this->usersModel = new UserModel();
+        $this->cartModel = new CartModel();
+        $this->itemModel = new ListItemsModel();
+        $this->preOrderModel = new PreOrderModel();
+        $this->preOrderCartModel = new PreOrderCartModel();
+        $this->divisionModel = new DivisionModel();
+
     }
 
-     public function getUsers()
-    {
-        $usersModel = new UserModel();
-        $users = $usersModel->findAll();
-        return $this->response->setJSON($users);
-    }
+    //  public function getUsers()
+    // {
+    //     $usersModel = new UserModel();
+    //     $users = $usersModel->findAll();
+    //     return $this->response->setJSON($users);
+    // }
+
+
+    // public function getDivisions()
+    // {
+    //     $divisions = $this->divisionModel->getDivisionsWithDepartment();
+    //     return $this->response->setJSON($divisions);
+    // }
+
+    // public function getDivisionsByDepartment($departmentId)
+    // {
+    //     $divisions = $this->divisionModel->where('department_id', $departmentId)->findAll();
+    //     return $this->response->setJSON($divisions);
+    // }
 
     public function index()
     {
-
+        // Pastikan pengguna sudah login
+        if (!session()->has('user_id')) {
+            return redirect()->to('/login');
+        }
+        
         $cartModel = new CartModel();
-        $itemModel = new ListItemsModel();
-
-        $user_id = session()->get('user_id');
-        $cartItems = $cartModel->where('user_id', $user_id)->findAll();
-        $cartItemCount = $cartModel->getCartItemCount();
+        $itemsModel = new ListItemsModel();
+        $preOrderCartModel = new PreOrderCartModel();
+        
+        // Ambil data user dari session
         $session = session();
-        $listitems = $this->listitemsModel->getTotalStock();
-        $limitsitems = $this->listitemsModel->getLowStockItems();
-        $lowStockItems = $itemModel->getLowStockItemsNotif();
+        $user_id = $session->get('user_id');
+        $username = $session->get('user_name');
+        $user_email = $session->get('user_email');
 
+        // Hitungan di navigasi bar
+        $cartItemCount = $cartModel->getCartItemCount();
+        $PreOrderCartCount = $preOrderCartModel->getPreorderCartCount();
+
+        // data inti per controller
+        $user_id = session()->get('user_id');
+        $cartItems = $cartModel->where('user_id',$user_id)->findAll();
 
         $data = [
             'title' => 'Checkout',
+            'subtitle' => '',
             'username' => $session->get('user_name'), // Mengambil username dari session
             'user_email' => $session->get('user_email'), // Mengambil useremail dari session
-            'totalstock_items' => $listitems,
-            'lowstock_itemsItems' => $limitsitems,
-            'lowStockItems' => $lowStockItems,
+            'pocount' => $PreOrderCartCount,
             'cartcount' => $cartItemCount,
             'cartItems' => []
         ];
 
         foreach ($cartItems as $cartItem) {
-            $item = $itemModel->find($cartItem['item_id']);
+            $item = $itemsModel->find($cartItem['item_id']);
             $data['cartItems'][] = [
                 'id' => $cartItem['id'],
                 'item' => $item,
@@ -85,6 +124,7 @@ class CheckoutController extends Controller
         $outboundItemModel = new OutboundItemModel();
         $itemModel = new ListItemsModel();
 
+        // data inti per controller
         $user_id = session()->get('user_id');
         $cartItems = $cartModel->where('user_id', $user_id)->findAll();
         $id_users = $this->request->getPost('recipient_name'); // cari username dengan inputan id username
@@ -94,7 +134,7 @@ class CheckoutController extends Controller
             return redirect()->to('/cart');
         }
 
-        $orderId = $outboundModel->insert([
+        $outboundId = $outboundModel->insert([
             'user_id' => $user_id,
             'recipient_id' => $id_users,
         ]);
@@ -102,7 +142,7 @@ class CheckoutController extends Controller
         foreach ($cartItems as $cartItem) {
             $item = $itemModel->find($cartItem['item_id']);
             $outboundItemModel->insert([
-                'order_id' => $orderId,
+                'outbound_id' => $outboundId,
                 'item_id' => $cartItem['item_id'],
                 'quantity' => $cartItem['quantity'],
             ]);
@@ -115,7 +155,7 @@ class CheckoutController extends Controller
         // Clear cart
         $cartModel->where('user_id', $user_id)->delete();
 
-        return redirect()->to('/order/success');
+        return redirect()->to('/transaction/outboundsuccess');
     }
 
 }

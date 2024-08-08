@@ -1,0 +1,46 @@
+OK Rubah status Items need detail ajax masih error
+OK view needitems/details_bundle masih jadi pertanyaan terpakai atau tidak
+OK Tombol di pre order cart dan pre order index belum di rubah masih menuju ke cart biasa
+OK PreOrderController Details
+// $receivedByUsername = $this->usersModel->getUsernameById($preorder['qc_id']); 
+// Rubah juga isi dari tabel pre_order
+//Seharusnya bukan di QC tapi ID Supplier dan informasi kontaknya
+Ok Prose dari pre Order cart belum di teruskan ke checkout hingga success
+
+Ok items need belum ada cara input kebutuhannya
+
+pre order:
+OK pre order detail print (controller) button print error
+
+Inbound detail :
+OK tambahkan isi tabel inbound index (nama supplier, tanggal pesan, tanggal dicheck/diterima))
+OK sertakan update status
+OK tambahakan QC yang ngecek (ajax)
+OK tambahkan action requested item di inbound detail pada tabel (belum bisa tambah stock item)
+OK update noted by :
+OK update date check
+
+Outbound :
+OK History Outbound tabel
+
+OK setelah dicek items_stok akan bertambah
+
+Report :
+OK INBOUND
+
+Setting :
+
+OK List Item belum bisa add
+Ok Roles tampilan sudah tapi tidak dengan fungsinya
+OK users belum
+Ok divisi belum
+Ok department belum
+Ok Users
+OK Supplier
+
+
+
+dashboard :
+OK Admin
+Ok Manager
+OK Staff

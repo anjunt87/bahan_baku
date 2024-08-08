@@ -4,71 +4,6 @@
 <?= $this->include('template/navbar') ?>
 <!-- Template SideBar -->
 <?= $this->include('template/sidebar') ?>
-<style>
-    .products {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .product {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        margin: 10px;
-        padding: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        background-color: #f9f9f9;
-    }
-
-    .product:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .product img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-        margin-bottom: 15px;
-    }
-
-    .product h2 {
-        font-size: 1.8em;
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    .product p {
-        margin-bottom: 15px;
-        color: #666;
-    }
-
-    .product form .form-group {
-        margin-bottom: 15px;
-    }
-
-    .product form input[type="number"] {
-        padding: 10px;
-        width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        text-align: center;
-    }
-
-    .product form button {
-        padding: 10px 20px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .product form button:hover {
-        background-color: #218838;
-    }
-</style>
 <div class="main-panel">
     <div class="content">
         <div class="container-fluid">
@@ -93,14 +28,15 @@
                                                 <!-- <p class="card-text">Harga: Rp <? //php echo number_format($item['price'], 2, ',', '.'); 
                                                                                     ?></p> -->
                                                 <p class="card-text"><?php echo $item['description']; ?></p>
-                                                <form action="/cart/add" method="post">
+                                                <!-- Add to Cart Form Outbound -->
+                                                <form class="add-to-cart-form-outbound" action="/cart/add" method="post">
                                                     <?= csrf_field(); ?>
-                                                    <input type="hidden" name="item_id" value="<?php echo $item['id_items']; ?>">
+                                                    <input type="hidden" name="item_id" value="<?= $item['id_items']; ?>">
                                                     <div class="form-group">
                                                         <label for="quantity">Amount :</label>
-                                                        <input type="number" class="form-control" name="quantity" id="quantity" min="1" max="<?php echo $item['stock_items']; ?>" value="1">
+                                                        <input type="number" class="form-control" name="quantity" id="quantity" min="1" max="<?= $item['stock_items']; ?>" value="1" oninput="updateTotalPrice()">
                                                     </div>
-                                                    <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
+                                                    <button type="submit" class="btn btn-success btn-block add-to-cart-button">Add to Cart</button>
                                                 </form>
                                             </div>
                                         </div>

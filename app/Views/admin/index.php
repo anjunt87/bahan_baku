@@ -21,7 +21,7 @@
                                  <div class="col-7 d-flex align-items-center">
                                      <div class="numbers">
                                          <p class="card-category">Users</p>
-                                         <h4 class="card-title"><?= $users;?></h4>
+                                         <h4 class="card-title"><?= $users; ?></h4>
                                      </div>
                                  </div>
                              </div>
@@ -40,7 +40,7 @@
                                  <div class="col-7 d-flex align-items-center">
                                      <div class="numbers">
                                          <p class="card-category">In</p>
-                                         <h4 class="card-title">111</h4>
+                                         <h4 class="card-title"><?= $totalInboundItems; ?></h4>
                                      </div>
                                  </div>
                              </div>
@@ -59,7 +59,7 @@
                                  <div class="col-7 d-flex align-items-center">
                                      <div class="numbers">
                                          <p class="card-category">Out</p>
-                                         <h4 class="card-title">114</h4>
+                                         <h4 class="card-title"><?= $out; ?></h4>
                                      </div>
                                  </div>
                              </div>
@@ -77,8 +77,8 @@
                                  </div>
                                  <div class="col-7 d-flex align-items-center">
                                      <div class="numbers">
-                                         <p class="card-category">Order</p>
-                                         <h4 class="card-title">576</h4>
+                                         <p class="card-category">Pre Order</p>
+                                         <h4 class="card-title"><?= $po; ?></h4>
                                      </div>
                                  </div>
                              </div>
@@ -194,7 +194,7 @@
                             </div>
                         </div> -->
              </div>
-             <div class="row row-card-no-pd">
+             <!-- <div class="row row-card-no-pd">
                  <div class="col-md-4">
                      <div class="card">
                          <div class="card-body">
@@ -311,9 +311,9 @@
                              <div id="salesChart" class="chart"></div>
                          </div>
                      </div>
-                 </div>
-                 <div class="col-md-6">
-                     <!-- <div class="card">
+                 </div> -->
+             <div class="col-md-6">
+                 <!-- <div class="card">
                                 <div class="card-header ">
                                     <h4 class="card-title">Table</h4>
                                     <p class="card-category">Users Table</p>
@@ -350,9 +350,9 @@
                                     </table>
                                 </div>
                             </div> -->
-                 </div>
-                 <div class="col-md-6">
-                     <!-- <div class="card card-tasks">
+             </div>
+             <div class="col-md-6">
+                 <!-- <div class="card card-tasks">
                                 <div class="card-header ">
                                     <h4 class="card-title">Tasks</h4>
                                     <p class="card-category">To Do List</p>
@@ -470,36 +470,12 @@
                                     </div>
                                 </div>
                             </div> -->
-                 </div>
              </div>
          </div>
      </div>
-     <footer class="footer">
-         <div class="container-fluid">
-             <nav class="pull-left">
-                 <ul class="nav">
-                     <li class="nav-item">
-                         <a class="nav-link" href="http://www.themekita.com">
-                             ThemeKita
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="#">
-                             Help
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="https://themewagon.com/license/#free-item">
-                             Licenses
-                         </a>
-                     </li>
-                 </ul>
-             </nav>
-             <div class="copyright ml-auto">
-                 2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
-             </div>
-         </div>
-     </footer>
+ </div>
+ <!-- Template Footer -->
+ <?= $this->include('template/footer') ?>
  </div>
  </div>
  </div>
@@ -507,4 +483,5 @@
  </body>
  <!-- Template Script -->
  <?= $this->include('template/script') ?>
+
  </html>

@@ -4,67 +4,83 @@ namespace App\Controllers;
 
 use App\Models\CartModel;
 use CodeIgniter\Controller;
-use App\Models\InventoryModel;
 use App\Models\ListItemsModel;
 use App\Models\SuppliersModel;
 use App\Models\OrderModel;
 use App\Models\OrderItemModel;
+use App\Models\OutboundModel;
+use App\Models\OutboundItemModel;
 use App\Models\UserModel;
+use App\Models\PreOrderModel;
+use App\Models\PreOrderCartModel;
 
 class CartController extends Controller
 {
     protected $cartModel;
-    protected $itemModel;
     protected $cartItems;
-    protected $inventoryModel;
+    protected $itemModel;
     protected $listitemsModel;
-    protected $supplierModel;
+    protected $suppliersModel;
     protected $orderModel;
     protected $orderitemModel;
+    protected $outboundModel;
+    protected $outboundItemModel;
     protected $usersModel;
+    protected $preOrderModel;
+    protected $preOrderCartModel;
 
     public function __construct()
     {
 
         $this->listitemsModel = new ListItemsModel();
-        $this->inventoryModel = new InventoryModel();
-        $this->supplierModel = new SuppliersModel();
+        $this->suppliersModel = new SuppliersModel();
+        $this->outboundModel = new OutboundModel();
+        $this->outboundItemModel = new OutboundItemModel();
         $this->usersModel = new UserModel();
         $this->cartModel = new CartModel();
         $this->itemModel = new ListItemsModel();
+        $this->preOrderModel = new PreOrderModel();
+        $this->preOrderCartModel = new PreOrderCartModel();
 
     }
 
     public function index()
     {
+        // Pastikan pengguna sudah login
+        if (!session()->has('user_id')) {
+            return redirect()->to('/login');
+        }
 
         $cartModel = new CartModel();
-        $itemModel = new ListItemsModel();
-
-        $cartItemCount = $cartModel->getCartItemCount();
+        $itemsModel = new ListItemsModel();
+        $preOrderCartModel = new PreOrderCartModel();
 
         $user_id = session()->get('user_id');
         $cartItems = $cartModel->where('user_id', $user_id)->findAll();
 
+        // Ambil data user dari session
         $session = session();
-        $listitems = $this->listitemsModel->getTotalStock();
-        $limitsitems = $this->listitemsModel->getLowStockItems();
-        $lowStockItems = $itemModel->getLowStockItemsNotif();
+        $user_id = $session->get('user_id');
+        $username = $session->get('user_name');
+        $user_email = $session->get('user_email');
 
+        // Hitungan di dashboard
+        $cartItemCount = $cartModel->getCartItemCount(); 
+        $PreOrderCartCount = $preOrderCartModel->getPreorderCartCount();
 
+        // Data untuk view
         $data = [
-            'title' => 'Cart Items',
-            'username' => $session->get('user_name'), // Mengambil username dari session
-            'user_email' => $session->get('user_email'), // Mengambil useremail dari session
-            'totalstock_items' => $listitems,
-            'lowstock_itemsItems' => $limitsitems,
-            'lowStockItems' => $lowStockItems,
+            'title' => 'Cart Items Outbound',
+            'subtitle' => '',
+            'username' => $username,
+            'user_email' => $user_email,
+            'pocount' => $PreOrderCartCount,
             'cartcount' => $cartItemCount,
             'cartItems' => []
         ];
 
         foreach ($cartItems as $cartItem) {
-            $item = $itemModel->find($cartItem['item_id']);
+            $item = $itemsModel->find($cartItem['item_id']);
             $data['cartItems'][] = [
                 'id' => $cartItem['id'],
                 'item' => $item,
@@ -79,7 +95,6 @@ class CartController extends Controller
     {
         $cartModel = new CartModel();
         $itemModel = new ListItemsModel();
-        
         $cartItemCount = $cartModel->getCartItemCount();
 
         // Pastikan session sudah dimulai
@@ -130,8 +145,40 @@ class CartController extends Controller
     public function remove($id)
     {
         $cartModel = new CartModel();
-        $cartModel->delete($id);
 
-        return redirect()->to('/cart');
+        try {
+            $isDeleted = $cartModel->removeItem($id);
+            if ($isDeleted) {
+                return $this->response->setJSON(['success' => true]);
+            } else {
+                return $this->response->setJSON(['success' => false, 'message' => 'Item not found or could not be deleted']);
+            }
+        } catch (\Exception $e) {
+            // Log the exception
+            log_message('error', $e->getMessage());
+
+            return $this->response->setJSON(['success' => false, 'message' => 'An error occurred while deleting the item']);
+        }
+    }
+
+    public function update_quantity()
+    {
+        $cartModel = new CartModel();
+        $id = $this->request->getPost('id');
+        $delta = $this->request->getPost('delta');
+
+        $item = $cartModel->find($id);
+        if ($item) {
+            $newQuantity = $item['quantity'] + $delta;
+            if ($newQuantity > 0) {
+                $cartModel->update($id, ['quantity' => $newQuantity]);
+                return $this->response->setJSON(['success' => true, 'new_quantity' => $newQuantity]);
+            } else {
+                $cartModel->delete($id);
+                return $this->response->setJSON(['success' => true, 'new_quantity' => 0]);
+            }
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Item not found']);
+        }
     }
 }

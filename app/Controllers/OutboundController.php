@@ -4,55 +4,74 @@ namespace App\Controllers;
 
 use App\Models\CartModel;
 use CodeIgniter\Controller;
-use App\Models\InventoryModel;
 use App\Models\ListItemsModel;
 use App\Models\SuppliersModel;
 use App\Models\OutboundModel;
 use App\Models\OutboundItemModel;
 use App\Models\UserModel;
+use App\Models\PreOrderModel;
+use App\Models\PreOrderCartModel;
 
 class OutboundController extends Controller
 {
     protected $cartModel;
     protected $itemModel;
     protected $cartItems;
-    protected $inventoryModel;
     protected $listitemsModel;
     protected $supplierModel;
     protected $outboundModel;
     protected $outboundItemModel;
     protected $usersModel;
+    protected $preOrderModel;
+    protected $preOrderCartModel;
 
     public function __construct()
     {
         $this->listitemsModel = new ListItemsModel();
-        $this->inventoryModel = new InventoryModel();
         $this->supplierModel = new SuppliersModel();
         $this->usersModel = new UserModel();
         $this->cartModel = new CartModel();
         $this->itemModel = new ListItemsModel();
         $this->outboundModel = new OutboundModel();
         $this->outboundItemModel = new OutboundItemModel();
+        $this->preOrderModel = new PreOrderModel();
+        $this->preOrderCartModel = new PreOrderCartModel();
     }
 
     public function history()
     {
-        $userId = session()->get('user_id'); // Ambil user_id dari sesi pengguna
-        $outbounds = $this->outboundModel->getUserOutbounds($userId);
+        // Pastikan pengguna sudah login
+        if (!session()->has('user_id')) {
+            return redirect()->to('/login');
+        }
 
+        $cartModel = new CartModel();
+        $itemsModel = new ListItemsModel();
+        $preOrderCartModel = new PreOrderCartModel();
+
+        // Ambil data user dari session
+        $session = session();
+        $user_id = $session->get('user_id');
+        $username = $session->get('user_name');
+        $user_email = $session->get('user_email');
+
+        // Hitungan di navigasi bar
+        $cartItemCount = $cartModel->getCartItemCount();
+        $PreOrderCartCount = $preOrderCartModel->getPreorderCartCount();
+
+        // data inti per controller
         $cartItemCount = $this->cartModel->getCartItemCount();
         $session = session();
-        $listitems = $this->listitemsModel->getTotalStock();
-        $limitsitems = $this->listitemsModel->getLowStockItems();
-        $lowStockItems = $this->itemModel->getLowStockItemsNotif();
 
+        $userId = session()->get('user_id'); // Ambil user_id dari sesi pengguna
+        // $outbounds = $this->outboundModel->getUserOutbounds($userId);
+        $outbounds = $this->outboundModel->findAll();
         $data = [
             'title' => 'Outbound History',
+            'subtitle' => '',
             'username' => $session->get('user_name'), // Mengambil username dari session
             'user_email' => $session->get('user_email'), // Mengambil useremail dari session
-            'totalstock_items' => $listitems,
-            'lowstock_itemsItems' => $limitsitems,
-            'lowStockItems' => $lowStockItems,
+            'pocount' => $PreOrderCartCount,
             'cartcount' => $cartItemCount,
             'outbounds' => $outbounds
         ];
@@ -63,11 +82,26 @@ class OutboundController extends Controller
 
     public function detail($outboundId)
     {
+        // Pastikan pengguna sudah login
+        if (!session()->has('user_id')) {
+            return redirect()->to('/login');
+        }
+
+        $cartModel = new CartModel();
+        $itemsModel = new ListItemsModel();
+        $preOrderCartModel = new PreOrderCartModel();
+
+        // Ambil data user dari session
         $session = session();
-        $cartItemCount = $this->cartModel->getCartItemCount();
-        $listitems = $this->itemModel->getTotalStock();
-        $limitsitems = $this->itemModel->getLowStockItems();
-        $lowStockItems = $this->itemModel->getLowStockItemsNotif();
+        $user_id = $session->get('user_id');
+        $username = $session->get('user_name');
+        $user_email = $session->get('user_email');
+
+        // Hitungan di navigasi bar
+        $cartItemCount = $cartModel->getCartItemCount();
+        $PreOrderCartCount = $preOrderCartModel->getPreorderCartCount();
+
+        // data inti per controller
         $outbound = $this->outboundModel->getOutboundById($outboundId);
         $outboundItems = $this->outboundItemModel->getItemsByOutboundId($outboundId);
 
@@ -77,11 +111,10 @@ class OutboundController extends Controller
 
         $data = [
             'title' => 'Outbound Details',
+            'subtitle' => '',
             'username' => $session->get('user_name'), // Mengambil username dari session
             'user_email' => $session->get('user_email'), // Mengambil useremail dari session
-            'totalstock_items' => $listitems,
-            'lowstock_itemsItems' => $limitsitems,
-            'lowStockItems' => $lowStockItems,
+            'pocount' => $PreOrderCartCount,
             'cartcount' => $cartItemCount,
             'outbound' => $outbound,
             'outboundItems' => $outboundItems,
@@ -105,9 +138,6 @@ class OutboundController extends Controller
     {
         $session = session();
         $cartItemCount = $this->cartModel->getCartItemCount();
-        $listitems = $this->itemModel->getTotalStock();
-        $limitsitems = $this->itemModel->getLowStockItems();
-        $lowStockItems = $this->itemModel->getLowStockItemsNotif();
         $outbound = $this->outboundModel->getOutboundById($outboundId);
         $outboundItems = $this->outboundItemModel->getItemsByOutboundId($outboundId);
 
@@ -117,11 +147,9 @@ class OutboundController extends Controller
 
         $data = [
             'title' => 'Raw material retrieval information',
+            'subtitle' => '',
             'username' => $session->get('user_name'), // Mengambil username dari session
             'user_email' => $session->get('user_email'), // Mengambil useremail dari session
-            'totalstock_items' => $listitems,
-            'lowstock_itemsItems' => $limitsitems,
-            'lowStockItems' => $lowStockItems,
             'cartcount' => $cartItemCount,
             'outbound' => $outbound,
             'outboundItems' => $outboundItems,

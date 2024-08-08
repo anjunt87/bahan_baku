@@ -1,15 +1,3 @@
-<style>
-    .order-table th,
-    .order-table td {
-        text-align: center;
-    }
-
-    .order-table img {
-        width: 100px;
-        height: auto;
-    }
-</style>
-
 <!-- Template Navbar -->
 <?= $this->include('template/header') ?>
 <!-- Template Navbar -->
@@ -33,8 +21,8 @@
                                     No Outbound Records Found
                                 </div>
                             <?php else : ?>
-                                <table class="table table-striped order-table">
-                                    <thead>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th>ID Outbound</th>
                                             <th>Date</th>

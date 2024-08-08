@@ -1,20 +1,49 @@
 <?php
 
-namespace App\Controllers\Admin;
-
+namespace App\Controllers;
 use App\Controllers\BaseController;
-
-use App\Models\CartModel;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
-use App\Models\InventoryModel;
 use App\Models\ListItemsModel;
 use App\Models\SuppliersModel;
 use App\Models\OrderModel;
-use App\Models\OrderItemModel;
-use App\Models\UserModel;
+use App\Models\CartModel;
+use App\Models\OutboundModel;
+use App\Models\OutboundItemModel;
+use App\Models\PreOrderModel;
+use App\Models\PreOrderCartModel;
+use App\Models\DivisionModel;
 
 class Users extends BaseController
 {
+    protected $usersModel;
+    protected $cartModel;
+    protected $cartItems;
+    protected $itemModel;
+    protected $inventoryModel;
+    protected $listitemsModel;
+    protected $suppliersModel;
+    protected $orderModel;
+    protected $orderitemModel;
+    protected $outboundModel;
+    protected $outboundItemModel;
+    protected $preOrderModel;
+    protected $preOrderCartModel;
+    protected $divisionModel;
+
+    public function __construct()
+    {
+        $this->usersModel = new UserModel();
+        $this->listitemsModel = new ListItemsModel();
+        $this->suppliersModel = new SuppliersModel();
+        $this->outboundModel = new OutboundModel();
+        $this->outboundItemModel = new OutboundItemModel();
+        $this->cartModel = new CartModel();
+        $this->itemModel = new ListItemsModel();
+        $this->preOrderModel = new PreOrderModel();
+        $this->preOrderCartModel = new PreOrderCartModel();
+        $this->divisionModel = new DivisionModel();
+    }
 
     public function getUsers()
     {
@@ -23,23 +52,23 @@ class Users extends BaseController
         return $this->response->setJSON($users);
     }
 
-    // public function index()
-    // {
-    //     $itemsModel = new ListItemsModel();
+    public function getUsersByDivision($divisionId)
+    {
+        $usersModel = new UserModel();
+        $users = $usersModel->where('division_id', $divisionId)->findAll();
+        return $this->response->setJSON($users);
+    }
 
-    //     $session = session();
-    //     $cartModel = new CartModel();
-    //     $cartItemCount = $cartModel->getCartItemCount();
-    //     $lowStockItems = $itemsModel->getLowStockItemsNotif();
+    public function getDivisions()
+    {
+        $divisions = $this->divisionModel->getDivisionsWithDepartment();
+        return $this->response->setJSON($divisions);
+    }
 
-    //     $data = [
-    //         'title' => 'Admin Dashboard',
-    //         'users' => '100',
-    //         'username' => $session->get('user_name'), // Mengambil username dari session
-    //         'user_email' => $session->get('user_email'), // Mengambil username dari session
-    //         'cartcount' => $cartItemCount,
-    //         'lowStockItems' => $lowStockItems
-    //     ];
-    //     return view('admin/index', $data);
-    // }
+    public function getDivisionsByDepartment($departmentId)
+    {
+        $divisions = $this->divisionModel->where('department_id', $departmentId)->findAll();
+        return $this->response->setJSON($divisions);
+    }
+
 }

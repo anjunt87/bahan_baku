@@ -36,19 +36,25 @@
                                         </tr>
                                     </thead>
                                     <tbody id="suppliersTableBody">
-                                        <?php $i = 1 ?>
-                                        <?php foreach ($suppliers as $supplier) : ?>
+                                        <?php if (!empty($suppliers)) : ?>
+                                            <?php $i = 1; ?>
+                                            <?php foreach ($suppliers as $supplier) : ?>
+                                                <tr>
+                                                    <th><?= $i++; ?></th>
+                                                    <td><?= esc($supplier['name_suppliers']) ?></td>
+                                                    <td><?= esc($supplier['production_suppliers']) ?></td>
+                                                    <td><?= esc($supplier['contact_suppliers']) ?></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-primary edit-button" data-id="<?= esc($supplier['id_suppliers']) ?>" data-toggle="modal" data-target="#edit-suppliers"><i class="la la-edit"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-danger delete-button" data-id="<?= esc($supplier['id_suppliers']) ?>" data-toggle="modal" data-target="#delete-suppliers"><i class="la la-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
                                             <tr>
-                                                <th><?= $i++; ?></th>
-                                                <td><?= esc($supplier['name_suppliers']) ?></td>
-                                                <td><?= esc($supplier['production_suppliers']) ?></td>
-                                                <td><?= esc($supplier['contact_suppliers']) ?></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary edit-button" data-id="<?= esc($supplier['id_suppliers']) ?>" data-toggle="modal" data-target="#edit-suppliers"><i class="la la-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger delete-button" data-id="<?= esc($supplier['id_suppliers']) ?>" data-toggle="modal" data-target="#delete-suppliers"><i class="la la-trash"></i></button>
-                                                </td>
+                                                <td colspan="5">No suppliers available</td>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -66,9 +72,9 @@
 </div>
 </div>
 <!-- Modal Pop Up-->
-<?= $this->include('modal/modal-add-suppliers') ?>
-<?= $this->include('modal/modal-edit-suppliers') ?>
-<?= $this->include('modal/modal-delete-suppliers') ?>
+<?= $this->include('modal/suppliers/modal-add-suppliers') ?>
+<?= $this->include('modal/suppliers/modal-edit-suppliers') ?>
+<?= $this->include('modal/suppliers/modal-delete-suppliers') ?>
 </body>
 <!-- Template Script -->
 <?= $this->include('template/script') ?>

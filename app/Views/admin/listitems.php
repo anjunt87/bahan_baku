@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-2">
-                    <!-- <button class="btn btn-success mb-2 ml-2" data-toggle="modal" data-target="#add-items"> <i class="la la-plus"></i> Add Items</button> -->
+                    <button class="btn btn-success mb-2 ml-2" data-toggle="modal" data-target="#add-items"> <i class="la la-plus"></i> Add Items</button>
                 </div>
             </div>
             <div class="row">
@@ -28,23 +28,38 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Name Items</th>
-                                            <th>Action</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Previous Stock</th>
+                                            <th>Stock</th>
+                                            <th>Description</th>
+                                            <th>Image</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="itemsTableBody">
-                                        <?php $i = 1 ?>
-                                        <?php foreach ($listitems as $l) : ?>
+                                    <tbody>
+                                        <?php if (!empty($listitems)) : ?>
+                                            <?php foreach ($listitems as $item) : ?>
+                                                <tr>
+                                                    <td><?= $item['id_items'] ?></td>
+                                                    <td><?= $item['name_items'] ?></td> 
+                                                    <td><?= $item['previous_stock'] ?></td>
+                                                    <td><?= $item['stock_items'] ?></td>
+                                                    <td><?= $item['description'] ?></td>
+                                                    <td>
+                                                        <img src="<?= base_url('uploads/' . (!empty($item['image']) ? $item['image'] : 'default.jpg')) ?>" alt="Item Image" width="50">
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-primary edit-button" data-id="<?= esc($item['id_items']) ?>" data-toggle="modal" data-target="#edit-items"><i class="la la-edit"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-danger delete-button" data-id="<?= esc($item['id_items']) ?>" data-toggle="modal" data-target="#delete-items"><i class="la la-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
                                             <tr>
-                                                <td><?= $i++; ?></td>
-                                                <td><?= esc($l['name_items']) ?></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary edit-button" data-id="<?= esc($l['id_items']) ?>" data-toggle="modal" data-target="#edit-items"><i class="la la-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger delete-button" data-id="<?= esc($l['id_items']) ?>" data-toggle="modal" data-target="#delete-items"><i class="la la-trash"></i></button>
-                                                </td>
+                                                <td colspan="7">No items available</td>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>

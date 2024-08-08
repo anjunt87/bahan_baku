@@ -14,4 +14,9 @@ class SuppliersModel extends Model
     {
         return $this->save($data);
     }
+
+    public function getSuppliersnameById($supplierId)
+    {
+        return $this->where('id_suppliers', $supplierId)->first()['name_suppliers'] ?? 'Unknown'; // Mengambil username berdasarkan ID
+    }
 }

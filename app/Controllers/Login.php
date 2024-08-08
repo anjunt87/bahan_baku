@@ -40,9 +40,9 @@ class Login extends Controller
                     case 'admin':
                         return redirect()->to('/admin');
                     case 'manager':
-                        return redirect()->to('/manager/dashboard');
-                    case 'user':
-                        return redirect()->to('/user/dashboard');
+                        return redirect()->to('/manager');
+                    case 'staff':
+                        return redirect()->to('/staff');
                     default:
                         return redirect()->to('/login');
                 }
