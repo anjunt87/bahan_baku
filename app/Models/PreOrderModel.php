@@ -70,10 +70,11 @@ class PreOrderModel extends Model
         if ($startDate && $endDate) {
             return $this->select('pre_order.*, suppliers.name_suppliers, 
                               COUNT(pre_order_items.id) as amount_item,
-                              createdBy.user_name as created_by_username')
+                              createdBy.user_name as created_by_username, checkedBy.user_name as checked_by_username')
             ->join('suppliers', 'suppliers.id_suppliers = pre_order.supplier_id', 'left')
             ->join('pre_order_items', 'pre_order_items.preorder_id = pre_order.id', 'left')
-            ->join('users as createdBy', 'pre_order.created_by = createdBy.user_id', 'left') // Assuming the user who created the pre-order is tracked
+            ->join('users as createdBy', 'pre_order.noted_by = createdBy.user_id', 'left') // Assuming the user who created the pre-order is tracked
+            ->join('users as checkedBy', 'pre_order.checked_by = checkedBy.user_id', 'left') // Assuming the user who created the pre-order is tracked
             ->where('pre_order_date >=', $startDate)
                 ->where('pre_order_date <=', $endDate)
                 ->where('pre_order.status', 'completed')

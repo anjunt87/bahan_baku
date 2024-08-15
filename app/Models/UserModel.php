@@ -53,4 +53,9 @@ class UserModel extends Model
     {
         return $this->countAll();
     }
+
+    public function verifyPassword($username, $password)
+    {
+        return $this->where('user_name', $username)->where('user_password', $password)->first();
+    }
 }

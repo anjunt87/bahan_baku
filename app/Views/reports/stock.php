@@ -40,6 +40,8 @@
                     <?php else : ?>
                         <div class="d-flex justify-content-end mb-4">
                             <button class="btn btn-success" onclick="printReport()">Print Report</button>
+                            <a href="<?= base_url('report/downloadPDFReportStock/' . $startdate . '/' . $enddate) ?>" class="btn btn-danger ms-2 ml-2">Download PDF</a>
+                            <a href="<?= base_url('report/downloadExcelReportStock/' . $startdate . '/' . $enddate) ?>" class="btn btn-primary ms-2 ml-2">Download Excel</a>
                         </div>
                         <div class="card" id="reportTable">
                             <div class="card-body">

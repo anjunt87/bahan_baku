@@ -87,7 +87,8 @@ class Filters extends BaseFilters
             // ]],
             'csrf' => ['except' => [
                 'register/save',
-                'login/auth',
+                // 'login/auth',
+                // '/auth/doChangePassword',
                 '/cart/add',
                 '/checkout/process',
                 '/cart/update_quantity',

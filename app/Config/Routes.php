@@ -7,16 +7,20 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // login
-$routes->get('/', 'Login::index');
-$routes->get('/login', 'Login::index');
-$routes->post('/login/auth', 'Login::auth');
+$routes->get('/', 'Auth::index');
+$routes->get('/login', 'Auth::index');
+$routes->post('/login/auth', 'Auth::auth');
 
 // Register
 $routes->get('/register', 'Register::index');
 $routes->post('/register/save', 'Register::save');
 
 // Logout
-$routes->get('/logout', 'Login::logout');
+$routes->get('/logout', 'Auth::logout');
+
+// Change Password
+$routes->match(['get', 'post'], '/change-password', 'Auth::changePassword');
+$routes->match(['get', 'post'], '/doChangePassword', 'Auth::doChangePassword');
 
 // Halaman per role
 $routes->get('/admin', 'Admin\Index::index');
@@ -142,6 +146,14 @@ $routes->match(['get', 'post'], '/report/outboundDetail/(:num)', 'ReportControll
 $routes->match(['get', 'post'], '/report/outbound', 'ReportController::outboundReport');
 $routes->match(['get', 'post'], '/report/inbound', 'ReportController::inboundReport');
 $routes->match(['get', 'post'], '/report/inboundDetail/(:num)', 'ReportController::inboundDetail/$1');
+$routes->get('/report/downloadPDFReportStock/(:any)/(:any)', 'ReportController::downloadPDFReportStock/$1/$2');
+$routes->get('/report/downloadExcelReportStock/(:any)/(:any)', 'ReportController::downloadExcelReportStock/$1/$2');
+$routes->get('/report/downloadPDFReportPreorder/(:any)/(:any)', 'ReportController::downloadPDFReportPreorder/$1/$2');
+$routes->get('/report/downloadExcelReportPreorder/(:any)/(:any)', 'ReportController::downloadExcelReportPreorder/$1/$2');
+$routes->get('/report/downloadPDFReportOutbound/(:any)/(:any)', 'ReportController::downloadPDFReportOutbound/$1/$2');
+$routes->get('/report/downloadExcelReportOutbound/(:any)/(:any)', 'ReportController::downloadExcelReportOutbound/$1/$2');
+$routes->get('/report/downloadPDFReportInbound/(:any)/(:any)', 'ReportController::downloadPDFReportInbound/$1/$2');
+$routes->get('/report/downloadExcelReportInbound/(:any)/(:any)', 'ReportController::downloadExcelReportInbound/$1/$2');
 
 // Transaction Success
 $routes->get('/transaction/outboundsuccess', 'TransactionController::outboundsuccess');

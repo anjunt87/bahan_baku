@@ -39,6 +39,8 @@
                     <?php else : ?>
                         <div class="d-flex justify-content-end mb-4">
                             <button class="btn btn-success" onclick="printReport()">Print Report</button>
+                            <a href="<?= base_url('report/downloadPDFReportInbound/' . $startdate . '/' . $enddate) ?>" class="btn btn-danger ms-2 ml-2">Download PDF</a>
+                            <a href="<?= base_url('report/downloadExcelReportInbound/' . $startdate . '/' . $enddate) ?>" class="btn btn-primary ms-2 ml-2">Download Excel</a>
                         </div>
                         <div class="card" id="reportTable">
                             <div class="card-body">
@@ -52,6 +54,8 @@
                                                 <th>ID Inbound</th>
                                                 <th>Suppliers</th>
                                                 <th>Amount Item</th>
+                                                <th>Noted By</th>
+                                                <th>Checked By</th>
                                                 <th>Delivery Note</th>
                                                 <th>Order Date</th>
                                                 <th>Check Date</th>
@@ -83,6 +87,8 @@
                                                     <td><?= $report['id'] ?></td>
                                                     <td><?= $report['name_suppliers'] ?></td>
                                                     <td><?= $report['amount_item'] ?> Item</td>
+                                                    <td><?= $report['created_by_username'] ?></td>
+                                                    <td><?= $report['checked_by_username'] ?></td>
                                                     <td><?= $report['delivery_note'] ?></td>
                                                     <td><?= date('d M Y', strtotime($report['pre_order_date'])) ?></td>
                                                     <td><?= date('d M Y', strtotime($report['check_date'])) ?></td>
